@@ -1,88 +1,4 @@
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
-    <script src="./scripts/script.js" defer></script>
-    <link rel="icon" type="image/png" href="./images/tab-resize.png">
-
-    <title>模擬店紹介</title>
-
-</head>
-
-<body>
-    <div class="topbar">
-        <a href="./index.html" class="home-link">
-            <img src="./images/logo.png" alt="高専祭TOP" class="logo">
-        </a>
-        <button class="menu-toggle" aria-label="メニューを開く">☰</button>
-    </div>
-    <nav id="nav">
-        <ul>
-            <li><a href="./about.html">高専祭について</a></li>
-            <li><a href="./shop.html">模擬店紹介</a></li>
-            <li><a href="./guest.html">ゲスト紹介</a></li>
-            <li><a href="./event.html">イベント紹介</a></li>
-            <li><a href="./stamp-rally.html">スタンプラリー</a></li>
-            <li><a href="./company.html">ご協賛企業様紹介</a></li>
-            <li><a href="./schedule.html">スケジュール</a></li>
-            <li><a href="./map.html">会場マップ</a></li>
-            <li><a href="./announcements.html">お知らせ</a></li>
-            <li><a href="./bulletin.html">掲示板</a></li>
-            <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
-            <li><a href="./about-kosen.html">松江高専とは</a></li>
-            <li><a href="./aboutme.html">このサイトについて</a></li>
-        </ul>
-
-        <div class="nav-footer">
-            <a class="nav-social" href="https://www.instagram.com/mct_relations/" target="_blank"
-                rel="noopener noreferrer">
-                <img src="./images/insta.png" alt="Instagram" class="nav-social-icon">学校広報
-            </a>
-            <a class="nav-social" href="https://www.instagram.com/mct_gakuseikai/" target="_blank"
-                rel="noopener noreferrer">
-                <img src="./images/insta.png" alt="Instagram" class="nav-social-icon">学生会
-            </a>
-        </div>
-
-    </nav>
-
-
-    <div class="container-section shop-page">
-        <h2>模擬店</h2>
-        <div class="grid" id="food-grid">
-            <!-- JavaScriptで動的に生成 -->
-        </div>
-
-        <!-- <h2>体験系</h2> -->
-        <div class="grid" id="experience-grid">
-            <!-- JavaScriptで動的に生成 -->
-        </div>
-    </div>
-
-    <!-- モーダルウィンドウ -->
-<div class="modal" id="shopModal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-
-        <img id="modalImage" class="modal-image" src="" alt="">
-
-        <div class="modal-body">
-            <h2 id="modalTitle"></h2>
-            <p class="modal-product">
-                <strong>内容：</strong>
-                <span id="modalProduct"></span>
-            </p>
-            <p class="modal-description" id="modalDescription"></p>
-        </div>
-    </div>
-</div>
-
-    <script>
-        // 団体データ
-        const shops = [
+[
   {
     "id": "shop-1",
     "category": "food",
@@ -246,7 +162,7 @@
   },
   {
     "id": "shop-24",
-    "category": "food",
+    "category": "experience",
     "name": "帰宅部",
     "product": "フォトスポット・コスプレ",
     "description": "ギラギラで映えるフォトスポットや小物、コスプレ体験を用意しています！女子はもちろん、男子も大歓迎！みんなでワイワイ楽しみながら、高専祭の思い出を写真に残しませんか？高専生活ではなかなか味わえない青春気分を思いっきり楽しもう！"
@@ -270,7 +186,7 @@
     "category": "food",
     "name": "エコラン",
     "product": "ピザ",
-    "description": "私たちエコラン部は子供でも食べやすい手のひらサイズのピザを販売します。定番からめちゃおもろな創作ピザまで様々な味を楽しめます。魂のピッツァをご賞味ください！"
+    "description": "エコランです。ピザを販売します。"
   },
   {
     "id": "shop-28",
@@ -293,69 +209,4 @@
     "product": "ブラジル肉パン",
     "description": "私たち留学生はブラジル肉パンを販売します！ブラジルの伝統料理を日本の食材で再現します。留学生が作る本格的なブラジル料理にご興味がありましたら、ぜひお越しください！"
   }
-];
-        // 食べ物系と体験系に分類
-        const foodShops = shops.filter(shop => shop.category === 'food');
-        const experienceShops = shops.filter(shop => shop.category === 'experience');
-
-        // カード生成関数
-        function createCard(shop) {
-            const card = document.createElement('div');
-            card.className = 'card shop-card';
-            
-            // 商品名を表示用に調整（長すぎる場合は省略）
-            const productDisplay = shop.product.length > 30 
-                ? shop.product.substring(0, 30) + '...' 
-                : shop.product;
-            
-            card.innerHTML = `
-                <img src="./images/shop.jpg" alt="${shop.name}">
-                <div class="card-body">
-                    <h3>${shop.name}</h3>
-                </div>
-                <div class="detail" title="${shop.product}">${productDisplay}</div>
-            `;
-            card.addEventListener('click', () => openModal(shop));
-            return card;
-        }
-
-        // グリッドにカードを追加
-        const foodGrid = document.getElementById('food-grid');
-        foodShops.forEach(shop => {
-            foodGrid.appendChild(createCard(shop));
-        });
-
-        const experienceGrid = document.getElementById('experience-grid');
-        experienceShops.forEach(shop => {
-            experienceGrid.appendChild(createCard(shop));
-        });
-
-        // モーダル制御
-        const modal = document.getElementById('shopModal');
-        const closeBtn = document.querySelector('.close');
-
-        function openModal(shop) {
-         document.getElementById('modalImage').src = './images/shop.jpg';
-         document.getElementById('modalImage').alt = shop.name;
-
-         document.getElementById('modalTitle').textContent = shop.name;
-         document.getElementById('modalProduct').textContent = shop.product;
-         document.getElementById('modalDescription').textContent = shop.description;
-
-         modal.style.display = 'flex';
-         }
-
-        closeBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-    </script>
-
-</body>
-
-</html>
+]
